@@ -1,0 +1,62 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <title>Combining streams</title>
+    <style>
+		canvas, video {
+            background: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Combining streams</h1>
+
+	<section>
+		<p>This demo will try to create a video stream out of the canvas, and an audio stream out of an Audio Context, and mix them together into a stream that we'll play on a video element.</p>
+		<canvas width="320" height="200"></canvas>
+		<video></video>
+    </section>
+
+	<script>
+
+		var canvas = document.querySelector('canvas');
+		var canvasContext = canvas.getContext('2d');
+		var audioContext = new AudioContext();
+		var video = document.querySelector('video');
+		
+		try {
+			if(!canvas.captureStream) {
+				throw new Error('Canvas.captureStream not supported');
+			}
+			// Capture frames from the canvas at 30 fps (?)
+			var videoStream = canvas.captureStream(30);
+			var videoTrack = videoStream.getTracks().pop();
+
+			var combinedStream = new MediaStream();
+
+			combinedStream.addTrack(videoTrack);
+			
+			video.src = window.URL.createObjectURL(combinedStream);
+			video.play();
+
+			requestAnimationFrame(animate);
+
+			
+		} catch(e) {
+			alert(e.message);
+		}
+
+		function animate(t) {
+			requestAnimationFrame(animate);
+
+			var t2 = t * 0.001;
+			var red = Math.round(128 + 128 * Math.sin(t2));
+			var green = Math.round(128 + 128 * Math.cos(t2));
+			canvasContext.fillStyle = 'rgb(' + red + ', ' + green + ', 0)';
+			canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+		}
+
+
+	</script>
+</body>
