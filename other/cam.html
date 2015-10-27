@@ -1,0 +1,78 @@
+<!doctype html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Camera recording</title>
+    <style>
+        button {
+            font-size: 2em;
+            width: 100%;
+        }
+        video {
+            background: #000;
+            width: 100%
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Camera recording</h1>
+
+    <section>
+        <p><button id="start-record">Record cam</button></p>
+        <p><video id="show-cam"></p>
+        <p><button id="download" disabled>Download recording</button>
+    </section>
+
+<script>
+var recordButton = document.getElementById('start-record');
+var downloadButton = document.getElementById('download');
+var video = document.getElementById('show-cam');
+
+var recorder;
+
+function startRecording() {
+    navigator.mediaDevices.getUserMedia({
+        audio: true,
+        video: true
+    }).then(function (stream) {
+        recorder = new MediaRecorder(stream, { mimeType: 'video/mp4' });
+        video.src = window.URL.createObjectURL(stream);
+        video.muted = true;
+        video.play();
+        video.onloadeddata = function (evt) {
+            downloadButton.disabled = false;
+            recorder.start();
+        };
+    }).catch(function (err) {
+        console.error(err);
+    });
+}
+
+function saveRecording() {
+    recorder.stop();
+    recorder.ondataavailable = function (evt) {
+        var link = document.createElement('a');
+        link.setAttribute('href', window.URL.createObjectURL(evt.data));
+        link.setAttribute('download', 'video.mp4');
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+}
+
+recordButton.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    startRecording();
+    recordButton.disabled = true;
+}, false);
+
+downloadButton.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    saveRecording();
+    downloadButton.disabled = true;
+});
+
+</script>
+</body>
