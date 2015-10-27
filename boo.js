@@ -7,9 +7,14 @@ function Boo(stream, original, filtered) {
     this.video.src = window.URL.createObjectURL(stream);
     this.video.play();
 
-    this.video.onloadeddata = function () {
+
+    this.video.addEventListener('loadeddata', function () {
         window.requestAnimationFrame(this._tick.bind(this));
-    }.bind(this);
+        this.canvasStream = this.canvas.captureStream(12);
+        this.canvasStream.addTrack(this.stream.getAudioTracks()[0]);
+        this.recorder = new MediaRecorder(this.canvasStream, { mimeType: 'video/mp4' });
+        this.recorder.start();
+    }.bind(this), false);
 }
 
 Boo.prototype._tick = function () {
@@ -42,17 +47,41 @@ Boo.prototype.render = function () {
         width, height);
 };
 
+Boo.prototype.download = function () {
+    this.recorder.stop();
+    this.recorder.ondataavailable = function (evt) {
+        var link = document.createElement('a');
+        link.setAttribute('href', window.URL.createObjectURL(evt.data));
+        link.setAttribute('download', 'video.webm');
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+};
+
 window.onload = function () {
     var boo;
 
     navigator.mediaDevices.getUserMedia({
         video: true,
-        audio: false
+        audio: true
     }).then(function (stream) {
-        boo = new Boo(
+        var video = document.getElementById('booth-original');
+        var boo = new Boo(
             stream,
-            document.getElementById('booth-original'),
+            video,
             document.getElementById('booth-filtered')
         );
+
+        var button = document.getElementById('download');
+        video.addEventListener('loadeddata', function () {
+            button.disabled = false;
+        });
+        button.addEventListener('click', function () {
+            button.disabled = true;
+            boo.download();
+        });
+
     });
 };
