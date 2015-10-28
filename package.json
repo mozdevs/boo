@@ -7,7 +7,8 @@
       "build": "browserify app/js/main.js > app/js/bundle.js",
       "watch": "watchify app/js/main.js -o app/js/bundle.js",
       "clean": "rm app/js/bundle.js && rm -rf dist",
-      "dist": "npm run build && bin/deploy.sh"
+      "dist": "npm run build && bin/dist.sh",
+      "deploy": "bin/deploy.sh"
   },
   "repository": {
     "type": "git",

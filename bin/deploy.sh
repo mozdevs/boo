@@ -1,10 +1,6 @@
-#!/bin/bash
-
-mkdir -p dist
-rm -rf dist/*
-mkdir dist/js
-mkdir dist/css
-
-cp app/*.html dist/
-cp app/css/*.css dist/css/
-cp app/js/bundle.js dist/js/
+git checkout -B gh-pages && \
+npm run dist && \
+git add dist && \
+git commit && \
+git subtree push --prefix dist origin gh-pages && \
+git checkout master
