@@ -7,9 +7,6 @@ function Boo(stream, original, filtered) {
     this.video.src = window.URL.createObjectURL(stream);
     this.video.play();
 
-    this.renderer = new PIXI.WebGLRenderer(
-        this.canvas.width, this.canvas.height, { view: this.canvas });
-
     this.video.addEventListener('loadeddata', function () {
         window.requestAnimationFrame(this._tick.bind(this));
         this.canvasStream = this.canvas.captureStream(12);
