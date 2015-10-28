@@ -1,0 +1,25 @@
+{
+  "name": "boo",
+  "version": "1.0.0",
+  "description": "MediaRecorder demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mozdevs/boo.git"
+  },
+  "author": "",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/mozdevs/boo/issues"
+  },
+  "homepage": "https://github.com/mozdevs/boo#readme",
+  "dependencies": {
+    "browserify": "^12.0.1"
+  },
+  "devDependencies": {
+    "watchify": "^3.5.0"
+  }
+}
