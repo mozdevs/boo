@@ -1,3 +1,5 @@
+var Renderer = require('./js/renderer.js');
+
 function Boo(stream, original, filtered) {
     this.stream = stream;
     this.video = original;

@@ -4,11 +4,11 @@
   "description": "MediaRecorder demo",
   "main": "index.js",
   "scripts": {
-      "build": "browserify app/js/main.js > app/js/bundle.js",
-      "watch": "watchify app/js/main.js -o app/js/bundle.js",
-      "clean": "rm app/js/bundle.js && rm -rf dist",
-      "dist": "npm run build && bin/dist.sh",
-      "deploy": "git subtree push --prefix dist origin gh-pages"
+    "build": "browserify app/js/main.js > app/js/bundle.js",
+    "watch": "watchify app/js/main.js -o app/js/bundle.js",
+    "clean": "rm app/js/bundle.js && rm -rf dist",
+    "dist": "npm run build && bin/dist.sh",
+    "deploy": "git subtree push --prefix dist origin gh-pages"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,8 @@
   },
   "homepage": "https://github.com/mozdevs/boo#readme",
   "dependencies": {
-    "browserify": "^12.0.1"
+    "browserify": "^12.0.1",
+    "gl-matrix": "^2.3.1"
   },
   "devDependencies": {
     "watchify": "^3.5.0"
