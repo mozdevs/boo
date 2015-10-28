@@ -1,0 +1,28 @@
+.main-wrapper {
+    margin: 0 auto;
+    width: 80%;
+}
+
+.main-header, .main-footer {
+    text-align: center;
+}
+
+.booth {
+    text-align: center;
+}
+
+.clips {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.clip {
+    flex: 0 0 auto;
+    width: 320px;
+    height: 320px;
+    background: #000;
+    margin: 0.5em;
+}
