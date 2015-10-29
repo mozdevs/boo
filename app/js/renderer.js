@@ -259,7 +259,8 @@ var Renderer = function(canvas, errorCallback, readyCallback) {
                     projectionMatrix: {},
                     modelViewMatrix: {},
                     map: {}
-                }
+                },
+                name: k
             });
 
             effects.push(effect);
@@ -356,6 +357,11 @@ var Renderer = function(canvas, errorCallback, readyCallback) {
 
     };
 
+    this.getEffects = function () {
+        return effects.map(function (x) {
+            return x.name;
+        });
+    };
 
     this.previousEffect = function() {
 
@@ -374,6 +380,10 @@ var Renderer = function(canvas, errorCallback, readyCallback) {
 
         activeEffect = effects[newIndex];
 
+    };
+
+    this.selectEffect = function (index) {
+        activeEffect = effects[index % effects.length];
     };
 
 

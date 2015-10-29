@@ -1,13 +1,19 @@
 var Renderer = require('./renderer.js');
 var EventEmitter = require('events');
 
+function errorHandler(msg) {
+    throw new Error(msg);
+}
+
 function Boo(stream, original, filtered) {
     // inherit from EventEmitter
     EventEmitter.call(this);
 
-    this.originalRenderer = new Renderer(original, null, null);
+    this.originalRenderer = new Renderer(original, errorHandler, null);
 
-    this.filteredRenderer = new Renderer(filtered, null, function () {
+    this.filteredRenderer = new Renderer(filtered, errorHandler, function () {
+        // create a muted, invisible video element tostream the camera/mic
+        // output to
         this.video = document.createElement('video');
         this.video.style = 'display:none';
         this.video.muted = true;
@@ -38,6 +44,14 @@ Boo.prototype._tick = function () {
     window.requestAnimationFrame(this._tick.bind(this));
     this.originalRenderer.updateTexture(this.video);
     this.filteredRenderer.updateTexture(this.video);
+};
+
+Boo.prototype.getVideoEffects = function ()  {
+    return this.filteredRenderer.getEffects();
+};
+
+Boo.prototype.applyVideoEffect = function (index) {
+    this.filteredRenderer.selectEffect(index);
 };
 
 // Boo.prototype.render = function () {

@@ -2,6 +2,7 @@ var ImageEffect = function (params) {
 	params = params || {};
 
 	var self = this;
+	this.name = params.name || 'Unknown';
 	this.vertexShaderScript = params.vertexShader;
 	this.fragmentShaderScript = params.fragmentShader;
 	this.shaderProgram = null;
