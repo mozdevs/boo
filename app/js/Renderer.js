@@ -13,7 +13,7 @@
  * Visit http://webgl.org if you want to learn more about WebGL.
  */
 
-var ImageEffect = require('./image-effect.js');
+var ImageEffect = require('./ImageEffect.js');
 var glMatrix = require('gl-matrix');
 
 var Renderer = function(canvas, errorCallback, readyCallback) {

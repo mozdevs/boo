@@ -1,4 +1,4 @@
-var Renderer = require('./renderer.js');
+var Renderer = require('./Renderer.js');
 var EventEmitter = require('events');
 
 function errorHandler(msg) {
