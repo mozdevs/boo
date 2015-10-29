@@ -5,6 +5,7 @@ window.onload = function () {
     var vfxCombo = document.getElementById('vfx');
     var downloadButton = document.getElementById('download');
     var recordButton = document.getElementById('record');
+    var countdown = document.getElementById('countdown');
     var videoData;
 
     navigator.mediaDevices.getUserMedia({
@@ -20,6 +21,7 @@ window.onload = function () {
         boo.on('ready', function () {
             recordButton.disabled = false;
             downloadButton.disabled = true;
+            countdown.style = 'display:none';
 
             var vfx = boo.getVideoEffects();
             vfxCombo.innerHTML = '';
@@ -45,8 +47,22 @@ window.onload = function () {
             videoData = null;
             recordButton.disabled = true;
             downloadButton.disabled = true;
+            countdown.style = '';
 
-            boo.record();
+            var number = countdown.querySelector('.number');
+            var countdownTime = 5; // seconds
+            number.innerHTML = countdownTime;
+
+            var interval = setInterval(function () {
+                countdownTime--;
+                number.innerHTML = countdownTime;
+                if (countdownTime <= 0) {
+                    clearInterval(interval);
+                    countdown.style = 'display:none';
+
+                    boo.record();
+                }
+            }, 1000);
         });
 
         downloadButton.addEventListener('click', function () {
