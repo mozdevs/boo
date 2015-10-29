@@ -3,12 +3,13 @@
     width: 80%;
 }
 
-.main-header, .main-footer {
+.main-header, .main-footer, main {
     text-align: center;
 }
 
 .booth {
     text-align: center;
+    display: inline-block;
 }
 
 .clips {
@@ -49,4 +50,9 @@
 
 .countdown > * {
     flex: 0 0 auto;
+}
+
+.clip-progress {
+    width: calc(100% - 1em);
+    margin: 0.5em;
 }

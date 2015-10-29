@@ -15,7 +15,8 @@ window.onload = function () {
         var boo = new Boo(
             stream,
             document.getElementById('booth-original'),
-            document.getElementById('booth-filtered')
+            document.getElementById('booth-filtered'),
+            document.getElementById('booth-progress')
         );
 
         boo.on('ready', function () {

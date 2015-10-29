@@ -5,10 +5,11 @@ function errorHandler(msg) {
     throw new Error(msg);
 }
 
-function Boo(stream, original, filtered) {
+function Boo(stream, original, filtered, progressBar) {
     // inherit from EventEmitter
     EventEmitter.call(this);
 
+    this.progressBar = progressBar;
     this.originalRenderer = new Renderer(original, errorHandler, null);
 
     this.filteredRenderer = new Renderer(filtered, errorHandler, function () {
@@ -48,7 +49,16 @@ Boo.prototype.constructor = Boo;
 
 Boo.RECORD_TIME = 6; // in seconds
 
-Boo.prototype._tick = function () {
+Boo.prototype._tick = function (elapsed) {
+    if (this.isRecording) { // update progress bar when recording
+        if (!this._started) {
+            this._started = elapsed;
+        }
+        else {
+            this.progressBar.value = (elapsed - this._started) / 1000;
+        }
+    }
+
     window.requestAnimationFrame(this._tick.bind(this));
     this.originalRenderer.updateTexture(this.video);
     this.filteredRenderer.updateTexture(this.video);
@@ -56,13 +66,21 @@ Boo.prototype._tick = function () {
 
 Boo.prototype.record = function () {
     this.recorder.start();
+    this._started = null;
+
+    this.progressBar.max = Boo.RECORD_TIME;
+    this.progressBar.value = 0;
+
+    this.isRecording = true;
 
     this.recorder.ondataavailable = function (evt) {
         this.emit('finished', evt.data);
     }.bind(this);
 
     setTimeout(function () {
+        this.isRecording = false;
         this.recorder.stop();
+        this.progressBar.value = this.progressBar.max;
     }.bind(this), Boo.RECORD_TIME * 1000);
 };
 
