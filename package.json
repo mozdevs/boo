@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npm run build:directories && npm run build:html && npm run build:css && npm run build:shaders && npm run build:js",
-    "build:directories": "mkdirp ./dist && mkdirp ./dist/js && mkdirp ./dist/css && mkdir -p ./dist/shaders",
+    "build:directories": "mkdirp ./dist && mkdirp ./dist/js && mkdirp ./dist/css && mkdirp ./dist/shaders",
     "build:html": "cpx ./app/index.html ./dist",
     "build:css": "cpx \"./app/css/**/*\" ./dist/css",
     "build:shaders": "cpx \"./app/shaders/**/*\" ./dist/shaders",
