@@ -21,6 +21,7 @@ var Renderer = function(canvas, errorCallback, readyCallback) {
     var gl;
     var effects = [];
     var effectDefinitions = {
+        'None': { vertex: 'plane.vs', fragment: 'none.fs' },
         'Green Monster': { vertex: 'plane.vs', fragment: 'greenmonster.fs' },
     };
     var activeEffect = null;

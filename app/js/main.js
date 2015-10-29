@@ -7,21 +7,19 @@ window.onload = function () {
         video: true,
         audio: true
     }).then(function (stream) {
-        var video = document.getElementById('booth-original');
         var boo = new Boo(
             stream,
-            video,
+            document.getElementById('booth-original'),
             document.getElementById('booth-filtered')
         );
 
         var button = document.getElementById('download');
-        video.addEventListener('loadeddata', function () {
+        boo.on('ready', function () {
             button.disabled = false;
         });
         button.addEventListener('click', function () {
             button.disabled = true;
             boo.download();
         });
-
     });
 };
