@@ -4,9 +4,15 @@
   "description": "MediaRecorder demo",
   "main": "index.js",
   "scripts": {
-    "build": "browserify ./app/js/main.js > ./app/js/bundle.js",
-    "watch": "watchify app/js/main.js -o app/js/bundle.js",
-    "clean": "rm app/js/bundle.js && rm -rf dist",
+    "build": "npm run build:directories && npm run build:html && npm run build:css && npm run build:shaders && npm run build:js",
+    "build:directories": "mkdirp ./dist && mkdirp ./dist/js && mkdirp ./dist/css && mkdir ./dist/shaders",
+    "build:html": "cpx ./app/index.html ./dist",
+    "build:css": "cpx \"./app/css/**/*\" ./dist/css",
+    "build:shaders": "cpx \"./app/shaders/**/*\" ./dist/shaders",
+    "build:js": "browserify ./app/js/main.js > ./dist/js/bundle.js",
+    "watch": "npm run watch:js",
+    "watch:js": "watchify app/js/main.js -o ./dist/js/bundle.js -v",
+    "clean": "rimraf ./dist",
     "dist": "npm run build && bin/dist.sh",
     "deploy": "git subtree push --prefix dist origin gh-pages",
     "start": "npm run build"
@@ -23,9 +29,10 @@
   "homepage": "https://github.com/mozdevs/boo#readme",
   "dependencies": {
     "browserify": "^12.0.1",
-    "gl-matrix": "^2.3.1"
-  },
-  "devDependencies": {
+    "cpx": "^1.2.1",
+    "gl-matrix": "^2.3.1",
+    "mkdirp": "^0.5.1",
+    "rimraf": "^2.4.3",
     "watchify": "^3.5.0"
   }
 }
