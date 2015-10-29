@@ -1,9 +1,11 @@
-var Boo = require('./boo.js');
+var Boo = require('./Boo.js');
 
 window.onload = function () {
     var boo;
     var vfxCombo = document.getElementById('vfx');
-    var button = document.getElementById('download');
+    var downloadButton = document.getElementById('download');
+    var recordButton = document.getElementById('record');
+    var videoData;
 
     navigator.mediaDevices.getUserMedia({
         video: true,
@@ -16,7 +18,9 @@ window.onload = function () {
         );
 
         boo.on('ready', function () {
-            button.disabled = false;
+            recordButton.disabled = false;
+            downloadButton.disabled = true;
+
             var vfx = boo.getVideoEffects();
             vfxCombo.innerHTML = '';
             vfx.forEach(function (x, index) {
@@ -31,9 +35,30 @@ window.onload = function () {
             vfxCombo.disabled = false;
         });
 
-        button.addEventListener('click', function () {
-            button.disabled = true;
-            boo.download();
+        boo.on('finished', function (data) {
+            recordButton.disabled = false;
+            downloadButton.disabled = false;
+            videoData = data;
+        });
+
+        recordButton.addEventListener('click', function () {
+            videoData = null;
+            recordButton.disabled = true;
+            downloadButton.disabled = true;
+
+            boo.record();
+        });
+
+        downloadButton.addEventListener('click', function () {
+            downloadButton.disabled = true;
+
+            var link = document.createElement('a');
+            link.setAttribute('href', window.URL.createObjectURL(videoData));
+            link.setAttribute('download', 'video.webm');
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         });
 
         vfxCombo.addEventListener('change', function (evt) {

@@ -29,7 +29,6 @@ function Boo(stream, original, filtered) {
             this.canvasStream = filtered.captureStream(12);
             this.canvasStream.addTrack(this.stream.getAudioTracks()[0]);
             this.recorder = new MediaRecorder(this.canvasStream);
-            this.recorder.start();
         }.bind(this), false);
     }.bind(this));
 
@@ -40,10 +39,24 @@ function Boo(stream, original, filtered) {
 Boo.prototype = Object.create(EventEmitter.prototype);
 Boo.prototype.constructor = Boo;
 
+Boo.RECORD_TIME = 6; // in seconds
+
 Boo.prototype._tick = function () {
     window.requestAnimationFrame(this._tick.bind(this));
     this.originalRenderer.updateTexture(this.video);
     this.filteredRenderer.updateTexture(this.video);
+};
+
+Boo.prototype.record = function () {
+    this.recorder.start();
+
+    this.recorder.ondataavailable = function (evt) {
+        this.emit('finished', evt.data);
+    }.bind(this);
+
+    setTimeout(function () {
+        this.recorder.stop();
+    }.bind(this), Boo.RECORD_TIME * 1000);
 };
 
 Boo.prototype.getVideoEffects = function ()  {
@@ -78,18 +91,5 @@ Boo.prototype.applyVideoEffect = function (index) {
 //         offsetX, offsetY,
 //         width, height);
 // };
-
-Boo.prototype.download = function () {
-    this.recorder.stop();
-    this.recorder.ondataavailable = function (evt) {
-        var link = document.createElement('a');
-        link.setAttribute('href', window.URL.createObjectURL(evt.data));
-        link.setAttribute('download', 'video.webm');
-        link.style.display = 'none';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
-};
 
 module.exports = Boo;
