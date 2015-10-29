@@ -1,4 +1,4 @@
-var Renderer = require('./js/renderer.js');
+var Renderer = require('./renderer.js');
 
 function Boo(stream, original, filtered) {
     this.stream = stream;
