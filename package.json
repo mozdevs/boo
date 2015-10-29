@@ -8,7 +8,8 @@
     "watch": "watchify app/js/main.js -o app/js/bundle.js",
     "clean": "rm app/js/bundle.js && rm -rf dist",
     "dist": "npm run build && bin/dist.sh",
-    "deploy": "git subtree push --prefix dist origin gh-pages"
+    "deploy": "git subtree push --prefix dist origin gh-pages",
+    "start": "npm run build"
   },
   "repository": {
     "type": "git",
