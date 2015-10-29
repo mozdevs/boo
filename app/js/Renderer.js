@@ -23,7 +23,8 @@ var Renderer = function(canvas, errorCallback, readyCallback) {
     var effectDefinitions = {
         'None': { vertex: 'plane.vs', fragment: 'none.fs' },
         'Witch': { vertex: 'plane.vs', fragment: 'greenmonster.fs' },
-        'Lo-Fi Purple': { vertex: 'plane.vs', fragment: 'lofipurple.fs' }
+        'Lo-Fi Purple': { vertex: 'plane.vs', fragment: 'lofipurple.fs' },
+        'Pixelated Red': { vertex: 'plane.vs', fragment: 'redpixel.fs' }
     };
     var activeEffect = null;
     var shadersReady = false;
