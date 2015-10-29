@@ -94,3 +94,7 @@ git subtree pull --prefix dist origin gh-pages
 ```
 
 Work to simplify this section is tracked on [issue #8](https://github.com/mozdevs/boo/issues/8).
+
+## Prototypes, demos and other stuff
+
+We're building intermediate prototypes to figure out how to do certain semi-isolated things, and putting them in the `other/` folder.
