@@ -22,7 +22,6 @@
 .clip {
     flex: 0 0 auto;
     width: 320px;
-    height: 320px;
     background: #000;
     margin: 0.5em;
 }

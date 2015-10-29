@@ -21,6 +21,13 @@ function Boo(stream, original, filtered) {
         document.body.appendChild(this.video);
         this.video.play();
 
+        this.video.addEventListener('loadedmetadata', function () {
+            var w = this.video.videoWidth;
+            var h = this.video.videoHeight;
+            this.filteredRenderer.setSize(w, h);
+            this.originalRenderer.setSize(w, h);
+        }.bind(this));
+
         this.filteredRenderer.nextEffect();
 
         this.video.addEventListener('loadeddata', function () {
