@@ -3,12 +3,13 @@
     width: 80%;
 }
 
-.main-header, .main-footer {
+.main-header, .main-footer, main {
     text-align: center;
 }
 
 .booth {
     text-align: center;
+    display: inline-block;
 }
 
 .clips {
@@ -17,12 +18,41 @@
     justify-content: center;
     flex-wrap: wrap;
     align-items: center;
+    position: relative;
 }
 
 .clip {
     flex: 0 0 auto;
     width: 320px;
-    height: 320px;
     background: #000;
+    margin: 0.5em;
+}
+
+.countdown {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 50%;
+    padding: 1em;
+}
+
+.number {
+    font-size: 3em;
+}
+
+.countdown > * {
+    flex: 0 0 auto;
+}
+
+.clip-progress {
+    width: calc(100% - 1em);
     margin: 0.5em;
 }
