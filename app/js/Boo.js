@@ -5,16 +5,16 @@ function errorHandler(msg) {
     throw new Error(msg);
 }
 
-function Boo(stream, original, filtered, progressBar) {
+function Boo(stream, originalCanvas, filteredCanvas, progressBar) {
     // inherit from EventEmitter
     EventEmitter.call(this);
 
     this.progressBar = progressBar;
-    this.originalRenderer = new Renderer(original, errorHandler, null);
+    this.originalRenderer = new Renderer(originalCanvas, errorHandler, null);
 
-    this.filteredRenderer = new Renderer(filtered, errorHandler, function () {
-        // create a muted, invisible video element tostream the camera/mic
-        // output to
+    this.filteredRenderer = new Renderer(filteredCanvas, errorHandler, function onStreamReady() {
+        // create a muted, invisible video element to stream 
+        // the camera/mic output to
         this.video = document.createElement('video');
         this.video.style = 'display:none';
         this.video.muted = true;
@@ -34,7 +34,7 @@ function Boo(stream, original, filtered, progressBar) {
         this.video.addEventListener('loadeddata', function () {
             this.emit('ready');
             window.requestAnimationFrame(this._tick.bind(this));
-            this.canvasStream = filtered.captureStream(12);
+            this.canvasStream = filteredCanvas.captureStream(12);
             this.canvasStream.addTrack(this.stream.getAudioTracks()[0]);
             this.recorder = new MediaRecorder(this.canvasStream);
         }.bind(this), false);
