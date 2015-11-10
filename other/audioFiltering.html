@@ -1,0 +1,80 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <title>Realtime audio filtering</title>
+    <style>
+		video {
+			background: #ccc;
+			width: 10rem;
+			height: auto;
+		}
+    </style>
+</head>
+
+<body>
+    <h1>Realtime audio filtering</h1>
+
+	<section>
+		<p>This demo starts getUserMedia and pipes the output to an audio effect.</p>
+		<video></video>
+    </section>
+
+	<script>
+		var videoElement = document.querySelector('video');
+		var inputSource;
+		var streamDestination;
+
+		navigator.mediaDevices.getUserMedia({
+			video: true,
+			audio: true
+		}).then(function (stream) {
+			init(stream);
+		}).catch(function (err) {
+			console.error(err);
+		});
+
+		function init(stream) {
+			var audioContext = new AudioContext();
+			inputSource = audioContext.createMediaStreamSource(stream);
+			streamDestination = audioContext.createMediaStreamDestination();
+
+			// instantiate effects
+			var currentEffect = new AudioEffect(audioContext);
+			activateEffect(currentEffect);
+
+			// select first effect
+
+			var finalStream = new MediaStream();
+			var videoTrack = stream.getVideoTracks()[0];
+			// var audioTrack = stream.getAudioTracks()[0];
+			var audioTrack = streamDestination.stream.getAudioTracks()[0];
+
+			finalStream.addTrack(videoTrack);
+			finalStream.addTrack(audioTrack);
+
+			videoElement.src = URL.createObjectURL(finalStream);
+			videoElement.play();
+		}
+
+		function AudioEffect(context) {
+			var inputGain = context.createGain();
+			var outputGain = context.createGain();
+
+			this.input = inputGain;
+			this.output = outputGain;
+
+			// pass-through by default (i.e. doesn't filter anything)
+			inputGain.connect(outputGain);
+		}
+
+		function activateEffect(effectInstance) {
+			effectInstance.output.disconnect();
+			inputSource.disconnect();
+			inputSource.connect(effectInstance.input);
+			effectInstance.output.connect(streamDestination);
+		}
+
+		
+		
+	</script>
+</body>
