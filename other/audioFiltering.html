@@ -39,8 +39,8 @@
 			streamDestination = audioContext.createMediaStreamDestination();
 
 			// instantiate effects
-			var currentEffect = new AudioEffect(audioContext);
-			activateEffect(currentEffect);
+			var effectEcho = new AudioEffectEcho(audioContext);
+			var currentEffect = activateEffect(effectEcho);
 
 			// select first effect
 
@@ -56,6 +56,15 @@
 			videoElement.play();
 		}
 
+		function activateEffect(effectInstance) {
+			effectInstance.output.disconnect();
+			inputSource.disconnect();
+			inputSource.connect(effectInstance.input);
+			effectInstance.output.connect(streamDestination);
+
+			return effectInstance;
+		}
+
 		function AudioEffect(context) {
 			var inputGain = context.createGain();
 			var outputGain = context.createGain();
@@ -67,11 +76,25 @@
 			inputGain.connect(outputGain);
 		}
 
-		function activateEffect(effectInstance) {
-			effectInstance.output.disconnect();
-			inputSource.disconnect();
-			inputSource.connect(effectInstance.input);
-			effectInstance.output.connect(streamDestination);
+		function AudioEffectEcho(context) {
+			AudioEffect.call(this, context);
+
+			this.input.disconnect();
+
+			var now = context.currentTime;
+			var delay = context.createDelay();
+			var mixed = context.createGain();
+			var wetGain = context.createGain();
+
+			this.input.connect(mixed);
+			mixed.connect(this.output);
+
+			delay.connect(mixed);
+			delay.delayTime.setValueAtTime(0.5, now);
+
+			mixed.connect(wetGain);
+			wetGain.connect(delay);
+			wetGain.gain.setValueAtTime(0.9, now);
 		}
 
 		
