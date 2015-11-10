@@ -31,6 +31,16 @@ npm start
 
 The project will be built to the `dist/` folder. Open `dist/index.html` in your browser to run the project.
 
+### Getting rid of the *do you want to share the camera?* dialog
+
+If you serve the site using https, the browser will show you an additional option to store your camera and microphone sharing preferences. This can be really useful during development, to avoid having to give permission to use the webcam each time you reload the page.
+
+Serving content using https is not obvious, but here's [a nice tutorial](https://certsimple.com/blog/localhost-ssl-fix) explaining how to do this on Mac OS. If you know how to do the same for Linux or Windows, please let us know!
+
+Once you have a working https server, have it serve files from the `dist/` file and access its address on your browser, instead of opening `dist/index.html` directly. E.g. if you followed the instructions from the tutorial, your server will be running in port 8080, so go to [https://localhost:8080](https://localhost:8080/) to access the booth. You will be asked if you want to share the camera and microphone the first time you access it, and if you select "Always share" instead of "Share selected devices", your preferences will be saved and the dialog won't pop up again when you reload, unless you click the little camera icon on the left side of the URL bar and select "Stop sharing" from the drop down.
+
+<!-- TODO: probably add screenshots -->
+
 ## Developing
 
 (TODO: describe where the important files are)
