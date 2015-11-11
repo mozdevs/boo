@@ -1,4 +1,5 @@
 var Renderer = require('./Renderer.js');
+var AudioRenderer = require('./AudioRenderer.js');
 var EventEmitter = require('events').EventEmitter;
 var util = require('util');
 
@@ -10,8 +11,9 @@ function Boo(stream, originalCanvas, filteredCanvas, progressBar) {
 
     var self = this;
     var video;
-    var originalRenderer, filteredRenderer;
-    var canvasStream;
+    var videoWidth, videoHeight;
+    var filteredRenderer;
+    var audioRenderer;
     var recorder;
     var RECORD_TIME = 6; // in seconds
     var isRecording = false;
@@ -24,12 +26,15 @@ function Boo(stream, originalCanvas, filteredCanvas, progressBar) {
 
     // Init audio pipeline
     audioContext = new AudioContext();
+    audioRenderer = new AudioRenderer(audioContext);
     inputSource = audioContext.createMediaStreamSource(stream);
     streamDestination = audioContext.createMediaStreamDestination();
     audioTrack = streamDestination.stream.getAudioTracks()[0];
-
-    // tmp - should go through an audio filter
-    inputSource.connect(streamDestination);
+    
+    inputSource.connect(audioRenderer.input);
+    audioRenderer.output.connect(streamDestination);
+    // audioRenderer.output.connect(audioContext.destination);
+    audioRenderer.nextEffect();
 
 
     // Extract only the video track to a new stream for the
@@ -45,6 +50,9 @@ function Boo(stream, originalCanvas, filteredCanvas, progressBar) {
     // mutedVideo.style = 'display: none';
     mutedVideo.style = 'opacity: 0.5; width: 320px; height; auto;';
     mutedVideo.src = URL.createObjectURL(videoStream);
+    // If MediaStreamTrack.getCapabilities() was implemented,
+    // we would not need to wait for this event.
+    mutedVideo.addEventListener('loadedmetadata', onVideoMetadata);
     mutedVideo.play();
     document.body.appendChild(mutedVideo);
 
@@ -60,19 +68,20 @@ function Boo(stream, originalCanvas, filteredCanvas, progressBar) {
     recorder = new MediaRecorder(finalStream);
 
 
+    function onVideoMetadata(e) {
+        var v = e.currentTarget;
+        videoWidth = v.videoWidth;
+        videoHeight = v.videoHeight;
+        //console.log('video size', videoWidth, videoHeight);
+    }
+
+
     function onRendererReady() {
+        filteredRenderer.setSize(videoWidth, videoHeight);
+        filteredRenderer.nextEffect();
+        animate();
 
-        // If MediaStreamTrack.getCapabilities() was implemented,
-        // we would not need to wait for this event.
-        mutedVideo.addEventListener('loadedmetadata', function() {
-            var w = this.videoWidth;
-            var h = this.videoHeight;
-            filteredRenderer.setSize(w, h);
-            filteredRenderer.nextEffect();
-            animate();
-            self.emit('ready');
-        });
-
+        self.emit('ready');
     }
 
 
