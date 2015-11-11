@@ -16,38 +16,63 @@ function Boo(stream, originalCanvas, filteredCanvas, progressBar) {
     var RECORD_TIME = 6; // in seconds
     var isRecording = false;
     var recordingStartTime;
+    var audioTrack, videoTrack;
+    var audioContext;
 
     EventEmitter.call(this);
 
-    originalRenderer = new Renderer(originalCanvas, errorHandler, null);
-    filteredRenderer = new Renderer(filteredCanvas, errorHandler, onStreamReady);
 
-    function onStreamReady() {
-        // create a muted, invisible video element to stream 
-        // the camera/mic output to
-        video = document.createElement('video');
-        video.style = 'display:none';
-        video.muted = true;
-        video.src = window.URL.createObjectURL(stream);
-        document.body.appendChild(video);
-        video.play();
+    // Init audio pipeline
+    audioContext = new AudioContext();
+    inputSource = audioContext.createMediaStreamSource(stream);
+    streamDestination = audioContext.createMediaStreamDestination();
+    audioTrack = streamDestination.stream.getAudioTracks()[0];
 
-        video.addEventListener('loadedmetadata', function () {
-            var w = video.videoWidth;
-            var h = video.videoHeight;
+    // tmp - should go through an audio filter
+    inputSource.connect(streamDestination);
+
+
+    // Extract only the video track to a new stream for the
+    // video to WebGL renderer pipeline so we don't hear both
+    // the dry and wet audio tracks (i.e. unprocessed + processed)
+    videoTrack = stream.getVideoTracks()[0];
+    var videoStream = new MediaStream();
+    videoStream.addTrack(videoTrack);
+
+
+    var mutedVideo = document.createElement('video');
+    // TODO: move to a corner, or maybe even just hide it
+    // mutedVideo.style = 'display: none';
+    mutedVideo.style = 'opacity: 0.5; width: 320px; height; auto;';
+    mutedVideo.src = URL.createObjectURL(videoStream);
+    mutedVideo.play();
+    document.body.appendChild(mutedVideo);
+
+    filteredRenderer = new Renderer(filteredCanvas, errorHandler, onRendererReady);
+
+    var finalStream = filteredCanvas.captureStream(15);
+    finalStream.addTrack(audioTrack);
+
+    video = document.createElement('video');
+    video.src = URL.createObjectURL(finalStream);
+    video.play();
+
+    recorder = new MediaRecorder(finalStream);
+
+
+    function onRendererReady() {
+
+        // If MediaStreamTrack.getCapabilities() was implemented,
+        // we would not need to wait for this event.
+        mutedVideo.addEventListener('loadedmetadata', function() {
+            var w = this.videoWidth;
+            var h = this.videoHeight;
             filteredRenderer.setSize(w, h);
-            originalRenderer.setSize(w, h);
-        });
-
-        filteredRenderer.nextEffect();
-
-        video.addEventListener('loadeddata', function () {
+            filteredRenderer.nextEffect();
+            animate();
             self.emit('ready');
-            requestAnimationFrame(animate);
-            canvasStream = filteredCanvas.captureStream(12);
-            canvasStream.addTrack(stream.getAudioTracks()[0]);
-            recorder = new MediaRecorder(canvasStream);
         });
+
     }
 
 
@@ -55,7 +80,8 @@ function Boo(stream, originalCanvas, filteredCanvas, progressBar) {
 
         requestAnimationFrame(animate);
 
-        if (isRecording) { // update progress bar when recording
+        // Update progress bar while recording
+        if (isRecording) { 
             if (!recordingStartTime) {
                 recordingStartTime = elapsedTime;
             } else {
@@ -63,8 +89,7 @@ function Boo(stream, originalCanvas, filteredCanvas, progressBar) {
             }
         }
 
-        originalRenderer.updateTexture(video);
-        filteredRenderer.updateTexture(video);
+        filteredRenderer.updateTexture(mutedVideo);
     }
 
 
