@@ -11,7 +11,7 @@ function Boo(stream, originalCanvas, filteredCanvas, progressBar) {
 
     var self = this;
     var video;
-    var videoWidth, videoHeight;
+    var videoWidth = 640, videoHeight = 480;
     var filteredRenderer;
     var audioRenderer;
     var recorder;
@@ -58,7 +58,11 @@ function Boo(stream, originalCanvas, filteredCanvas, progressBar) {
 
     filteredRenderer = new Renderer(filteredCanvas, errorHandler, onRendererReady);
 
-    var finalStream = filteredCanvas.captureStream(15);
+    var canvasStream = filteredCanvas.captureStream(15);
+    var canvasVideoTrack = canvasStream.getVideoTracks()[0];
+
+    var finalStream = new MediaStream();
+    finalStream.addTrack(canvasVideoTrack);
     finalStream.addTrack(audioTrack);
 
     video = document.createElement('video');
@@ -72,11 +76,12 @@ function Boo(stream, originalCanvas, filteredCanvas, progressBar) {
         var v = e.currentTarget;
         videoWidth = v.videoWidth;
         videoHeight = v.videoHeight;
-        //console.log('video size', videoWidth, videoHeight);
+        console.log('video size', videoWidth, videoHeight);
     }
 
 
     function onRendererReady() {
+      
         filteredRenderer.setSize(videoWidth, videoHeight);
         filteredRenderer.nextEffect();
         animate();
