@@ -79,31 +79,11 @@ Once you have `dist`, you can copy the contents to your web server space using a
 
 ### Pushing to GitHub
 
-If you want to push a copy to GitHub, so you don't host this in your server:
+If you want to push a copy to GitHub, so you don't host this in your server, you can run the `deploy` task:
 
-change to branch `gh-pages`, run `dist`, commit your changes, and then run `deploy`.
-
-```
-git checkout gh-pages
-npm run dist
-git add dist
-git commit
+```bash
 npm run deploy
 ```
-
-What `npm run deploy` is exactly a subtree push:
-
-```
-git subtree push --prefix dist origin gh-pages
-```
-
-**In case of conflicts**, run a subtree pull, solve the conflicts and then commit again.
-
-```
-git subtree pull --prefix dist origin gh-pages
-```
-
-Work to simplify this section is tracked on [issue #8](https://github.com/mozdevs/boo/issues/8).
 
 ## Prototypes, demos and other stuff
 
