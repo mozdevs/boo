@@ -6,7 +6,7 @@ var Boo = require('./Boo.js');
 
 window.onload = function () {
     var boo;
-    var vfxCombo = document.getElementById('vfx');
+    var videoEffectSelector = document.getElementById('videoEffect');
     var downloadButton = document.getElementById('download');
     var recordButton = document.getElementById('record');
     var countdown = document.getElementById('countdown');
@@ -28,13 +28,18 @@ window.onload = function () {
             downloadButton.disabled = true;
             countdown.style = 'display:none';
 
-			vfxCombo.options = boo.getVideoEffects();
+			videoEffectSelector.options = boo.getVideoEffects();
 			// 0 is none--start with some effect applied already!
-			vfxCombo.selectedIndex = 1;
-            vfxCombo.disabled = false;
-			vfxCombo.addEventListener('selectedIndex', function(ev) {
-				boo.applyVideoEffect(ev.detail.value);
+			videoEffectSelector.selectedIndex = 1;
+            videoEffectSelector.disabled = false;
+			videoEffectSelector.addEventListener('selectedIndex', function(ev) {
+				boo.selectVideoEffect(ev.detail.value);
 			});
+
+			
+			
+
+			
         });
 
         boo.on('finished', function (data) {
@@ -77,8 +82,5 @@ window.onload = function () {
             document.body.removeChild(link);
         });
 
-        /*vfxCombo.addEventListener('change', function (evt) {
-            boo.applyVideoEffect(parseInt(vfxCombo.value, 10));
-        });*/
-    });
+	});
 };

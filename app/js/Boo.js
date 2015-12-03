@@ -136,8 +136,13 @@ function Boo(stream, originalCanvas, filteredCanvas, progressBar) {
     };
 
 
-    this.applyVideoEffect = function (index) {
+    this.selectVideoEffect = function (index) {
         filteredRenderer.selectEffect(index);
+    };
+
+
+    this.getAudioEffects = function() {
+      return audioRenderer.getEffects();
     };
 
 }
