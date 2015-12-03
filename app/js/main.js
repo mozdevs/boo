@@ -43,7 +43,7 @@ window.onload = function () {
 			});
 
 
-			
+
         });
 
         boo.on('finished', function (data) {
@@ -59,7 +59,7 @@ window.onload = function () {
             countdown.style = '';
 
             var number = countdown.querySelector('.number');
-            var countdownTime = 5; // seconds
+            var countdownTime = 3; // seconds
             number.innerHTML = countdownTime;
 
             var interval = setInterval(function () {
