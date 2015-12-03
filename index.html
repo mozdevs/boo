@@ -18,24 +18,25 @@
         <progress class="clip-progress" id="booth-progress"></progress>
 
         <section class="booth">
-
             <div class="clips">
                 <canvas id="booth-filtered" class="clip"></canvas>
                 <aside class="countdown" id="countdown" style="display:none">
-                    <span class="number">5</span>
+                    <span class="number">3</span>
                     <span>Get ready!</span>
                 </aside>
             </div>
-            <p>
-                <label>Video
-                  <moz-select id="videoEffect" disabled></moz-select>
-                </label>
-                <label>Audio
-                  <moz-select id="audioEffect" disabled></moz-select>
-                </label>
-                <button id="record" disabled>Record</button>
-                <button id="download" disabled>Download</button>
-            </p>
+            <footer class="controls">
+                <section class="effects control">
+                  <label>Video
+                    <moz-select id="videoEffect" disabled></moz-select>
+                  </label>
+                  <label>Audio
+                    <moz-select id="audioEffect" disabled></moz-select>
+                  </label>
+                </section>
+                <button class="control record" id="record" disabled><span class="record-icon">Record</span></button>
+                <button class="control" id="download" disabled>Download</button>
+            </footer>
         </section>
     </main>
 

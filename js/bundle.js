@@ -831,11 +831,12 @@ window.onload = function () {
 			});
 
 
-			
+
         });
 
         boo.on('finished', function (data) {
             recordButton.disabled = false;
+            recordButton.classList.remove('active');
             downloadButton.disabled = false;
             videoData = data;
         });
@@ -847,7 +848,7 @@ window.onload = function () {
             countdown.style = '';
 
             var number = countdown.querySelector('.number');
-            var countdownTime = 5; // seconds
+            var countdownTime = 3; // seconds
             number.innerHTML = countdownTime;
 
             var interval = setInterval(function () {
@@ -856,7 +857,7 @@ window.onload = function () {
                 if (countdownTime <= 0) {
                     clearInterval(interval);
                     countdown.style = 'display:none';
-
+                    recordButton.classList.add('active');
                     boo.record();
                 }
             }, 1000);
