@@ -7,13 +7,18 @@
 </head>
 
 <body>
+
+
 <div class="main-wrapper">
     <header class="main-header">
         <h1>Boo!</h1>
     </header>
 
     <main>
+        <progress class="clip-progress" id="booth-progress"></progress>
+        
         <section class="booth">
+
             <div class="clips">
                 <canvas id="booth-filtered" class="clip"></canvas>
                 <aside class="countdown" id="countdown" style="display:none">
@@ -21,7 +26,6 @@
                     <span>Get ready!</span>
                 </aside>
             </div>
-            <progress class="clip-progress" id="booth-progress"></progress>
             <p>
                 <label>Video
                   <moz-select id="videoEffect" disabled></moz-select>

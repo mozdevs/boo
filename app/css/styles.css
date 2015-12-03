@@ -1,3 +1,8 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
 .main-wrapper {
     margin: 0 auto;
     width: 80%;
@@ -53,6 +58,16 @@
 }
 
 .clip-progress {
-    width: calc(100% - 1em);
-    margin: 0.5em;
+    width: 100%;
+    margin: 0;
+    background: #fff;
+    border: 0;
+    height: 5px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.clip-progress::-moz-progress-bar {
+  background: #000;
 }
