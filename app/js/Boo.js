@@ -30,11 +30,11 @@ function Boo(stream, originalCanvas, filteredCanvas, progressBar) {
     inputSource = audioContext.createMediaStreamSource(stream);
     streamDestination = audioContext.createMediaStreamDestination();
     audioTrack = streamDestination.stream.getAudioTracks()[0];
-    
+
     inputSource.connect(audioRenderer.input);
     audioRenderer.output.connect(streamDestination);
     // audioRenderer.output.connect(audioContext.destination);
-    audioRenderer.nextEffect();
+    audioRenderer.selectEffect(0);
 
 
     // Extract only the video track to a new stream for the
@@ -143,6 +143,11 @@ function Boo(stream, originalCanvas, filteredCanvas, progressBar) {
 
     this.getAudioEffects = function() {
       return audioRenderer.getEffects();
+    };
+
+
+    this.selectAudioEffect = function(index) {
+      audioRenderer.selectEffect(index);
     };
 
 }

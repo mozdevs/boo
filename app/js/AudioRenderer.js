@@ -1,7 +1,7 @@
 var AudioEffect = require('./AudioEffect');
-var effectConstructors = [
-    require('./audioEffects/Echo'),
-    require('./audioEffects/Chorus')
+var effectDefinitions = [
+    { name: 'Echo', constructor: require('./audioEffects/Echo') },
+    { name: 'Chorus', constructor: require('./audioEffects/Chorus') }
 ];
 
 module.exports = function AudioRenderer(context) {
@@ -14,19 +14,21 @@ module.exports = function AudioRenderer(context) {
     var currentEffect = null;
     var currentEffectIndex = -1;
 
-    for(var i = 0; i < effectConstructors.length; i++) {
-        var constructor = effectConstructors[i];
+    effectDefinitions.forEach(function(def) {
+        var constructor = def.constructor;
         var instance = new constructor(context);
-        effects.push(instance);
-    }
+        effects.push({ name: def.name, instance: instance });
+    });
 
-    this.nextEffect = function() {
-        
-        var newIndex = currentEffectIndex + 1;
-        if(newIndex >= effects.length) {
-          newIndex = 0;
-        }
-        currentEffectIndex = newIndex;
+
+    this.getEffects = function() {
+        return effects.map(function (x) {
+            return x.name;
+        });
+    };
+
+
+    this.selectEffect = function(index) {
 
         this.input.disconnect();
 
@@ -34,11 +36,11 @@ module.exports = function AudioRenderer(context) {
             currentEffect.output.disconnect();
         }
 
-        currentEffect = effects[currentEffectIndex];
+        currentEffect = effects[index].instance;
+        currentEffectIndex = index;
 
         this.input.connect(currentEffect.input);
         currentEffect.output.connect(this.output);
 
     };
-
 };

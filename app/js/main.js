@@ -7,6 +7,7 @@ var Boo = require('./Boo.js');
 window.onload = function () {
     var boo;
     var videoEffectSelector = document.getElementById('videoEffect');
+    var audioEffectSelector = document.getElementById('audioEffect');
     var downloadButton = document.getElementById('download');
     var recordButton = document.getElementById('record');
     var countdown = document.getElementById('countdown');
@@ -36,8 +37,11 @@ window.onload = function () {
 				boo.selectVideoEffect(ev.detail.value);
 			});
 
-			
-			
+			audioEffectSelector.options = boo.getAudioEffects();
+			audioEffectSelector.addEventListener('selectedIndex', function(ev) {
+				boo.selectAudioEffect(ev.detail.value);
+			});
+
 
 			
         });
