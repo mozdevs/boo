@@ -115,7 +115,6 @@ function Boo(stream, originalCanvas, filteredCanvas, progressBar) {
     // we would not need to wait for this event.
     mutedVideo.addEventListener('loadedmetadata', onVideoMetadata);
     mutedVideo.play();
-    document.body.appendChild(mutedVideo);
 
     filteredRenderer = new Renderer(filteredCanvas, errorHandler, onRendererReady);
 
