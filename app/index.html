@@ -12,7 +12,7 @@
       </header>
 
       <main>
-          <progress class="clip-progress" id="booth-progress"></progress>
+          <progress class="clip-progress" id="booth-progress" value="0"></progress>
 
           <section class="booth">
               <canvas id="booth-filtered"></canvas>
@@ -22,15 +22,17 @@
               </aside>
               <footer class="controls">
                   <section class="effects control">
-                    <label>Video
+                    <label class="effect">Video
                       <moz-select id="videoEffect" disabled></moz-select>
                     </label>
-                    <label>Audio
+                    <label class="effect">Audio
                       <moz-select id="audioEffect" disabled></moz-select>
                     </label>
                   </section>
-                  <button class="control record" id="record" disabled><span class="record-icon">Record</span></button>
-                  <button class="control" id="download" disabled>Download</button>
+                  <section class="control">
+                    <button class="record" id="record" disabled><span class="record-icon">Record</span></button>
+                  </section>
+                  <button class="control download" id="download" disabled>Download</button>
               </footer>
           </section>
       </main>
