@@ -54,6 +54,7 @@ main {
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 10;
 }
 
 .clip-progress::-moz-progress-bar {
@@ -74,27 +75,23 @@ main {
   border-top-right-radius: 10px;
 }
 
-.control {
+.controls > * {
   display: flex-item;
   flex: 1 0 auto;
 }
 
-.control:nth-child(2) {
+.controls > *:nth-child(2) {
   margin: 0 2em;
 }
 
-.effects {
-  /*text-align: left;*/
-}
-
-.effect {
+.effects label {
   display: block;
   text-align: left;
   line-height: 23px;
   margin-top: 4px;
 }
 
-.effect:first-child {
+.effects label:first-child {
   margin: 0;
 }
 

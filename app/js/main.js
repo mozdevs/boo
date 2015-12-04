@@ -47,7 +47,7 @@ window.onload = function () {
                 updateSize();
             });
             updateSize();
-            
+
         });
 
         boo.on('finished', function (data) {
