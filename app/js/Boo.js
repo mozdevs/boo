@@ -7,7 +7,7 @@ function errorHandler(msg) {
     throw new Error(msg);
 }
 
-function Boo(stream, originalCanvas, filteredCanvas, progressBar) {
+function Boo(stream, filteredCanvas, progressBar) {
 
     var self = this;
     var video;
