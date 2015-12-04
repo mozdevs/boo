@@ -211,8 +211,6 @@ function Boo(stream, filteredCanvas, progressBar) {
     // Where width and height is the maximum size we can take
     // We will make sure the webcam view is proportionally scaled
     this.setSize = function(width, height) {
-        console.log('set size', width, height);
-
         var scaleX = width / videoWidth;
         var scaleY = height / videoHeight;
         var scaleToFit = Math.min(scaleX, scaleY);
@@ -847,7 +845,7 @@ window.onload = function () {
                 updateSize();
             });
             updateSize();
-            
+
         });
 
         boo.on('finished', function (data) {

@@ -1,7 +1,9 @@
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-family: Courier, 'Courier New', monospace;
+  background: #000;
+  font-size: 16px;
 }
 
 header {
@@ -15,7 +17,6 @@ main {
 
 .booth {
     text-align: center;
-    display: inline-block;
 }
 
 .countdown {
@@ -47,27 +48,66 @@ main {
 .clip-progress {
     width: 100%;
     margin: 0;
-    background: #fff;
+    background: #000;
     border: 0;
     height: 5px;
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 10;
 }
 
 .clip-progress::-moz-progress-bar {
-  background: #000;
+  background: #f00;
 }
 
 .controls {
   position: absolute;
   bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: space-between;
+  background: #fff;
+  color: #000;
+  padding: 14px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
-.control {
+.controls > * {
   display: flex-item;
+  flex: 1 0 auto;
+}
+
+.controls > *:nth-child(2) {
+  margin: 0 2em;
+}
+
+.effects label {
+  display: block;
+  text-align: left;
+  line-height: 23px;
+  margin-top: 4px;
+}
+
+.effects label:first-child {
+  margin: 0;
+}
+
+moz-select span {
+  padding: 0 1em;
+  width: 150px;
+  display: inline-block;
+  text-align: center;
+  line-height: 23px;
+}
+
+moz-select button {
+  border: 0;
+  background: #000;
+  color: #fff;
+  height: 23px;
 }
 
 .record {
@@ -107,6 +147,20 @@ main {
   animation-fill-mode: both;
   animation-duration: 1.5s;
   background: #f00;
+}
+
+.download {
+  background: #000;
+  border-radius: 10px;
+  color: #fff;
+  border: 0;
+  padding: 0.5em 2em;
+  cursor: pointer;
+}
+
+.download:disabled {
+  cursor: not-allowed;
+  background: #aaa;
 }
 
 @-moz-keyframes flash {
