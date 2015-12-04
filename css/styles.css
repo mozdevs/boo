@@ -4,34 +4,18 @@ body {
   font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
-.main-wrapper {
-    margin: 0 auto;
-    width: 80%;
+header {
+  position: absolute;
+  top: 0;
 }
 
-.main-header, .main-footer, main {
+main {
     text-align: center;
 }
 
 .booth {
     text-align: center;
     display: inline-block;
-}
-
-.clips {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    align-items: center;
-    position: relative;
-}
-
-.clip {
-    flex: 0 0 auto;
-    width: 320px;
-    background: #000;
-    margin: 0.5em;
 }
 
 .countdown {
@@ -76,6 +60,8 @@ body {
 }
 
 .controls {
+  position: absolute;
+  bottom: 0;
   display: flex;
   justify-content: space-between;
 }

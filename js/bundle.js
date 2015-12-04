@@ -68,7 +68,7 @@ function errorHandler(msg) {
     throw new Error(msg);
 }
 
-function Boo(stream, originalCanvas, filteredCanvas, progressBar) {
+function Boo(stream, filteredCanvas, progressBar) {
 
     var self = this;
     var video;
@@ -107,9 +107,6 @@ function Boo(stream, originalCanvas, filteredCanvas, progressBar) {
 
 
     var mutedVideo = document.createElement('video');
-    // TODO: move to a corner, or maybe even just hide it
-    // mutedVideo.style = 'display: none';
-    mutedVideo.style = 'opacity: 0.5; width: 320px; height; auto;';
     mutedVideo.src = URL.createObjectURL(videoStream);
     // If MediaStreamTrack.getCapabilities() was implemented,
     // we would not need to wait for this event.
@@ -210,6 +207,21 @@ function Boo(stream, originalCanvas, filteredCanvas, progressBar) {
       audioRenderer.selectEffect(index);
     };
 
+
+    // Where width and height is the maximum size we can take
+    // We will make sure the webcam view is proportionally scaled
+    this.setSize = function(width, height) {
+        console.log('set size', width, height);
+
+        var scaleX = width / videoWidth;
+        var scaleY = height / videoHeight;
+        var scaleToFit = Math.min(scaleX, scaleY);
+
+        var canvasWidth = (videoWidth * scaleToFit) | 0 ;
+        var canvasHeight = (videoHeight * scaleToFit) | 0;
+
+        filteredRenderer.setSize(canvasWidth, canvasHeight);
+    };
 }
 
 util.inherits(Boo, EventEmitter);
@@ -807,7 +819,6 @@ window.onload = function () {
     }).then(function (stream) {
         var boo = new Boo(
             stream,
-            document.getElementById('booth-original'),
             document.getElementById('booth-filtered'),
             document.getElementById('booth-progress')
         );
@@ -817,21 +828,26 @@ window.onload = function () {
             downloadButton.disabled = true;
             countdown.style = 'display:none';
 
-			videoEffectSelector.options = boo.getVideoEffects();
-			// 0 is none--start with some effect applied already!
-			videoEffectSelector.selectedIndex = 1;
+            videoEffectSelector.options = boo.getVideoEffects();
+            // 0 is none--start with some effect applied already!
+            videoEffectSelector.selectedIndex = 1;
             videoEffectSelector.disabled = false;
-			videoEffectSelector.addEventListener('selectedIndex', function(ev) {
-				boo.selectVideoEffect(ev.detail.value);
-			});
+            videoEffectSelector.addEventListener('selectedIndex', function(ev) {
+                boo.selectVideoEffect(ev.detail.value);
+            });
 
-			audioEffectSelector.options = boo.getAudioEffects();
-			audioEffectSelector.addEventListener('selectedIndex', function(ev) {
-				boo.selectAudioEffect(ev.detail.value);
-			});
+            audioEffectSelector.options = boo.getAudioEffects();
+            audioEffectSelector.addEventListener('selectedIndex', function(ev) {
+                boo.selectAudioEffect(ev.detail.value);
+            });
 
-
-
+            // Set the listener for resize events, but also
+            // make sure we're making the best use of the space already
+            window.addEventListener('resize', function() {
+                updateSize();
+            });
+            updateSize();
+            
         });
 
         boo.on('finished', function (data) {
@@ -875,7 +891,12 @@ window.onload = function () {
             document.body.removeChild(link);
         });
 
-	});
+
+        function updateSize() {
+            boo.setSize(window.innerWidth, window.innerHeight);
+        }
+
+    });
 };
 
 },{"./Boo.js":3,"./moz-select":9,"webcomponents-lite":27}],9:[function(require,module,exports){

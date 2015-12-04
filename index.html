@@ -7,44 +7,34 @@
 </head>
 
 <body>
+      <header>
+          <h1>Boo!</h1>
+      </header>
 
+      <main>
+          <progress class="clip-progress" id="booth-progress"></progress>
 
-<div class="main-wrapper">
-    <header class="main-header">
-        <h1>Boo!</h1>
-    </header>
+          <section class="booth">
+              <canvas id="booth-filtered"></canvas>
+              <aside class="countdown" id="countdown" style="display:none">
+                  <span class="number">3</span>
+                  <span>Get ready!</span>
+              </aside>
+              <footer class="controls">
+                  <section class="effects control">
+                    <label>Video
+                      <moz-select id="videoEffect" disabled></moz-select>
+                    </label>
+                    <label>Audio
+                      <moz-select id="audioEffect" disabled></moz-select>
+                    </label>
+                  </section>
+                  <button class="control record" id="record" disabled><span class="record-icon">Record</span></button>
+                  <button class="control" id="download" disabled>Download</button>
+              </footer>
+          </section>
+      </main>
 
-    <main>
-        <progress class="clip-progress" id="booth-progress"></progress>
-
-        <section class="booth">
-            <div class="clips">
-                <canvas id="booth-filtered" class="clip"></canvas>
-                <aside class="countdown" id="countdown" style="display:none">
-                    <span class="number">3</span>
-                    <span>Get ready!</span>
-                </aside>
-            </div>
-            <footer class="controls">
-                <section class="effects control">
-                  <label>Video
-                    <moz-select id="videoEffect" disabled></moz-select>
-                  </label>
-                  <label>Audio
-                    <moz-select id="audioEffect" disabled></moz-select>
-                  </label>
-                </section>
-                <button class="control record" id="record" disabled><span class="record-icon">Record</span></button>
-                <button class="control" id="download" disabled>Download</button>
-            </footer>
-        </section>
-    </main>
-
-    <footer class="main-footer">
-        <p><a href="https://github.com/mozdevs/boo">Source code available</a> on Github.</p>
-    </footer>
-</div><!-- main wrapper -->
-
-<!-- fork me on github banner -->
-<a href="https://github.com/mozdevs/boo"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+  <!-- fork me on github banner -->
+  <a href="https://github.com/mozdevs/boo"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 </body>
