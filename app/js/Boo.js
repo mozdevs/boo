@@ -46,9 +46,6 @@ function Boo(stream, filteredCanvas, progressBar) {
 
 
     var mutedVideo = document.createElement('video');
-    // TODO: move to a corner, or maybe even just hide it
-    // mutedVideo.style = 'display: none';
-    mutedVideo.style = 'opacity: 0.5; width: 320px; height; auto;';
     mutedVideo.src = URL.createObjectURL(videoStream);
     // If MediaStreamTrack.getCapabilities() was implemented,
     // we would not need to wait for this event.
@@ -149,6 +146,19 @@ function Boo(stream, filteredCanvas, progressBar) {
       audioRenderer.selectEffect(index);
     };
 
+
+    // Where width and height is the maximum size we can take
+    // We will make sure the webcam view is proportionally scaled
+    this.setSize = function(width, height) {
+        var scaleX = width / videoWidth;
+        var scaleY = height / videoHeight;
+        var scaleToFit = Math.min(scaleX, scaleY);
+
+        var canvasWidth = (videoWidth * scaleToFit) | 0 ;
+        var canvasHeight = (videoHeight * scaleToFit) | 0;
+
+        filteredRenderer.setSize(canvasWidth, canvasHeight);
+    };
 }
 
 util.inherits(Boo, EventEmitter);

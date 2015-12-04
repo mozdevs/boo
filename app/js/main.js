@@ -28,21 +28,26 @@ window.onload = function () {
             downloadButton.disabled = true;
             countdown.style = 'display:none';
 
-			videoEffectSelector.options = boo.getVideoEffects();
-			// 0 is none--start with some effect applied already!
-			videoEffectSelector.selectedIndex = 1;
+            videoEffectSelector.options = boo.getVideoEffects();
+            // 0 is none--start with some effect applied already!
+            videoEffectSelector.selectedIndex = 1;
             videoEffectSelector.disabled = false;
-			videoEffectSelector.addEventListener('selectedIndex', function(ev) {
-				boo.selectVideoEffect(ev.detail.value);
-			});
+            videoEffectSelector.addEventListener('selectedIndex', function(ev) {
+                boo.selectVideoEffect(ev.detail.value);
+            });
 
-			audioEffectSelector.options = boo.getAudioEffects();
-			audioEffectSelector.addEventListener('selectedIndex', function(ev) {
-				boo.selectAudioEffect(ev.detail.value);
-			});
+            audioEffectSelector.options = boo.getAudioEffects();
+            audioEffectSelector.addEventListener('selectedIndex', function(ev) {
+                boo.selectAudioEffect(ev.detail.value);
+            });
 
-
-
+            // Set the listener for resize events, but also
+            // make sure we're making the best use of the space already
+            window.addEventListener('resize', function() {
+                updateSize();
+            });
+            updateSize();
+            
         });
 
         boo.on('finished', function (data) {
@@ -86,5 +91,10 @@ window.onload = function () {
             document.body.removeChild(link);
         });
 
-	});
+
+        function updateSize() {
+            boo.setSize(window.innerWidth, window.innerHeight);
+        }
+
+    });
 };
