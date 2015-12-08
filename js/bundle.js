@@ -166,6 +166,7 @@ function Boo(stream, filteredCanvas, progressBar) {
 
     function onRecordingTimeOver() {
         isRecording = false;
+        video.muted = false;
         recorder.stop();
         progressBar.value = progressBar.max;
     }
@@ -179,6 +180,7 @@ function Boo(stream, filteredCanvas, progressBar) {
         progressBar.value = 0;
 
         isRecording = true;
+        video.muted = true;
 
         recorder.ondataavailable = function (evt) {
             self.emit('finished', evt.data);
