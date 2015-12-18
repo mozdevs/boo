@@ -25,7 +25,8 @@ var Renderer = function(canvas, errorCallback, readyCallback) {
         'Witch': { vertex: 'plane.vs', fragment: 'greenmonster.fs' },
         'Lo-Fi Purple': { vertex: 'plane.vs', fragment: 'lofipurple.fs' },
         'Pixelated Red': { vertex: 'plane.vs', fragment: 'redpixel.fs' },
-        'Burnt': { vertex: 'plane.vs', fragment: 'burnt.fs' }
+        'Burnt': { vertex: 'plane.vs', fragment: 'burnt.fs' },
+        'Inverted': { vertex: 'plane.vs', fragment: 'inverted.fs' }
     };
     var activeEffect = null;
     var shadersReady = false;
