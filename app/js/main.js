@@ -84,7 +84,7 @@ window.onload = function () {
 
             var link = document.createElement('a');
             link.setAttribute('href', window.URL.createObjectURL(videoData));
-            link.setAttribute('download', 'video.webm');
+            link.setAttribute('download', 'video_' + generateTimestamp() + '.webm');
             link.style.display = 'none';
             document.body.appendChild(link);
             link.click();
@@ -94,6 +94,14 @@ window.onload = function () {
 
         function updateSize() {
             boo.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function generateTimestamp() {
+          var now = new Date()
+          var ymd = now.getFullYear() + ("00" + (now.getMonth() + 1)).substr(-2) + ("00" + now.getDate()).substr(-2);
+          var hms = ("00" + now.getHours()).substr(-2) + ("00" + now.getMinutes()).substr(-2) + ("00" + now.getSeconds()).substr(-2)
+
+          return ymd + '_' + hms;
         }
 
     });
