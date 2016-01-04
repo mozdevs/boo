@@ -13,11 +13,16 @@ window.onload = function () {
     var countdown = document.getElementById('countdown');
     var videoData;
 
+
     navigator.mediaDevices.getUserMedia({
         video: true,
         audio: true
-    }).then(function (stream) {
-        var boo = new Boo(
+    }).then(initBooth);
+
+
+    function initBooth(stream) {
+        
+        boo = new Boo(
             stream,
             document.getElementById('booth-filtered'),
             document.getElementById('booth-progress')
@@ -91,18 +96,17 @@ window.onload = function () {
             document.body.removeChild(link);
         });
 
+    }
 
-        function updateSize() {
-            boo.setSize(window.innerWidth, window.innerHeight);
-        }
+    function updateSize() {
+        boo.setSize(window.innerWidth, window.innerHeight);
+    }
 
-        function generateTimestamp() {
-          var now = new Date()
-          var ymd = now.getFullYear() + ("00" + (now.getMonth() + 1)).substr(-2) + ("00" + now.getDate()).substr(-2);
-          var hms = ("00" + now.getHours()).substr(-2) + ("00" + now.getMinutes()).substr(-2) + ("00" + now.getSeconds()).substr(-2)
+    function generateTimestamp() {
+      var now = new Date()
+      var ymd = now.getFullYear() + ("00" + (now.getMonth() + 1)).substr(-2) + ("00" + now.getDate()).substr(-2);
+      var hms = ("00" + now.getHours()).substr(-2) + ("00" + now.getMinutes()).substr(-2) + ("00" + now.getSeconds()).substr(-2)
 
-          return ymd + '_' + hms;
-        }
-
-    });
+      return ymd + '_' + hms;
+    }
 };
