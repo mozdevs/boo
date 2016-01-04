@@ -13,7 +13,6 @@
     "watch": "npm run watch:js",
     "watch:js": "watchify app/js/main.js -o ./dist/js/bundle.js -v",
     "clean": "rimraf ./dist && rimraf .publish",
-    "dist": "npm run build && bin/dist.sh",
     "deploy": "gh-pages -d dist",
     "start": "npm run build"
   },
