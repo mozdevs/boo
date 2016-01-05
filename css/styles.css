@@ -58,7 +58,29 @@ main {
 }
 
 .clip-progress::-moz-progress-bar {
-  background: #f00;
+    background: #f00;
+}
+
+#loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    flex-direction: column;
+}
+
+#loader a {
+  color: #ff0;
+}
+
+.hidden {
+  visibility: hidden;
 }
 
 .controls {

@@ -808,6 +808,8 @@ var Boo = require('./Boo.js');
 
 window.onload = function () {
     var boo;
+    var loader = document.getElementById('loader');
+    var controls = document.querySelector('footer');
     var videoEffectSelector = document.getElementById('videoEffect');
     var audioEffectSelector = document.getElementById('audioEffect');
     var downloadButton = document.getElementById('download');
@@ -815,17 +817,60 @@ window.onload = function () {
     var countdown = document.getElementById('countdown');
     var videoData;
 
-    navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true
-    }).then(function (stream) {
-        var boo = new Boo(
+
+    var missingFeatures = getMissingFeatures();
+
+    if(missingFeatures.length === 0) {
+      navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: true
+      }).then(initBooth);
+    } else {
+        displayUnsupported(missingFeatures);
+    }
+
+
+    function getMissingFeatures() {
+
+        // First detect all features we need for the booth to work,
+        // and store them in tuples of [title, boolean true/false for support]
+        var features = [];
+
+        features.push(['navigator.mediaDevices.getUserMedia', navigator.mediaDevices !== undefined && navigator.mediaDevices.getUserMedia !== undefined]);
+        features.push(['unprefixed Web Audio', window.AudioContext !== undefined]);
+        features.push(['canvas.captureStream', window.CanvasCaptureMediaStream !== undefined]);
+
+        // Then return only the ones we're missing so we can show a
+        // bulleted list with info to the user/developer
+        return features.filter(function(f) {
+          return f[1] === false;
+        });
+    }
+
+
+    function displayUnsupported(features) {
+
+        var list = features.map(function(f) {
+            return '- ' + f[0];
+        }).join('\n');
+
+        var str = 'The following features are not supported in this browser: \n\n' + list;
+
+        alert(str);
+    }
+
+
+    function initBooth(stream) {
+
+        boo = new Boo(
             stream,
             document.getElementById('booth-filtered'),
             document.getElementById('booth-progress')
         );
 
         boo.on('ready', function () {
+            loader.classList.add('hidden');
+            controls.classList.remove('hidden');
             recordButton.disabled = false;
             downloadButton.disabled = true;
             countdown.style = 'display:none';
@@ -893,20 +938,19 @@ window.onload = function () {
             document.body.removeChild(link);
         });
 
+    }
 
-        function updateSize() {
-            boo.setSize(window.innerWidth, window.innerHeight);
-        }
+    function updateSize() {
+        boo.setSize(window.innerWidth, window.innerHeight);
+    }
 
-        function generateTimestamp() {
-          var now = new Date()
-          var ymd = now.getFullYear() + ("00" + (now.getMonth() + 1)).substr(-2) + ("00" + now.getDate()).substr(-2);
-          var hms = ("00" + now.getHours()).substr(-2) + ("00" + now.getMinutes()).substr(-2) + ("00" + now.getSeconds()).substr(-2)
+    function generateTimestamp() {
+      var now = new Date()
+      var ymd = now.getFullYear() + ("00" + (now.getMonth() + 1)).substr(-2) + ("00" + now.getDate()).substr(-2);
+      var hms = ("00" + now.getHours()).substr(-2) + ("00" + now.getMinutes()).substr(-2) + ("00" + now.getSeconds()).substr(-2)
 
-          return ymd + '_' + hms;
-        }
-
-    });
+      return ymd + '_' + hms;
+    }
 };
 
 },{"./Boo.js":3,"./moz-select":9,"webcomponents-lite":27}],9:[function(require,module,exports){

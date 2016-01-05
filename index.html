@@ -9,14 +9,18 @@
 <body>
       <main>
           <progress class="clip-progress" id="booth-progress" value="0"></progress>
-
+          <section id="loader">
+            <h1>Boo!</h1>
+            <p>Realtime Video Booth using WebGL, Web Audio and MediaRecorder - no plugins!</p>
+            <p><a href="https://github.com/mozdevs/boo">Source code</a> - <a href="https://github.com/mozdevs/boo#requirements">Troubleshooting</a></p>
+          </section>
           <section class="booth">
               <canvas id="booth-filtered"></canvas>
               <aside class="countdown" id="countdown" style="display:none">
                   <span class="number">3</span>
                   <span>Get ready!</span>
               </aside>
-              <footer class="controls">
+              <footer class="controls hidden">
                   <section class="effects">
                     <label>Video
                       <moz-select id="videoEffect" disabled></moz-select>
