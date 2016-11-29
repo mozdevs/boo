@@ -1,14 +1,14 @@
 body {
-  padding: 0;
-  margin: 0;
-  font-family: Courier, 'Courier New', monospace;
-  background: #000;
-  font-size: 16px;
+    padding: 0;
+    margin: 0;
+    font-family: Courier, 'Courier New', monospace;
+    background: #000;
+    font-size: 16px;
 }
 
 header {
-  position: absolute;
-  top: 0;
+    position: absolute;
+    top: 0;
 }
 
 main {
@@ -76,121 +76,121 @@ main {
 }
 
 #loader a {
-  color: #ff0;
+    color: #ff0;
 }
 
 .hidden {
-  visibility: hidden;
+    visibility: hidden;
 }
 
 .controls {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  justify-content: space-between;
-  background: #fff;
-  color: #000;
-  padding: 14px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    background: #fff;
+    color: #000;
+    padding: 14px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 .controls > * {
-  display: flex-item;
-  flex: 1 0 auto;
+    display: flex-item;
+    flex: 1 0 auto;
 }
 
 .controls > *:nth-child(2) {
-  margin: 0 2em;
+    margin: 0 2em;
 }
 
 .effects label {
-  display: block;
-  text-align: left;
-  line-height: 23px;
-  margin-top: 4px;
+    display: block;
+    text-align: left;
+    line-height: 23px;
+    margin-top: 4px;
 }
 
 .effects label:first-child {
-  margin: 0;
+    margin: 0;
 }
 
 moz-select span {
-  padding: 0 1em;
-  width: 150px;
-  display: inline-block;
-  text-align: center;
-  line-height: 23px;
+    padding: 0 1em;
+    width: 150px;
+    display: inline-block;
+    text-align: center;
+    line-height: 23px;
 }
 
 moz-select button {
-  border: 0;
-  background: #000;
-  color: #fff;
-  height: 23px;
+    border: 0;
+    background: #000;
+    color: #fff;
+    height: 23px;
 }
 
 .record {
-  border-radius: 50%;
-  background: #000;
-  border: 0;
-  width: 50px;
-  height: 50px;
+    border-radius: 50%;
+    background: #000;
+    border: 0;
+    width: 50px;
+    height: 50px;
 }
 
 .record:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .record-icon {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #f00;
-  display: block;
-  font-size: 0;
-  line-height: 20px;
-  margin: 0 auto;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #f00;
+    display: block;
+    font-size: 0;
+    line-height: 20px;
+    margin: 0 auto;
 }
 
 .record:disabled {
-  cursor: not-allowed;
+    cursor: not-allowed;
 }
 
 .record:disabled .record-icon {
-  background: #999;
+    background: #999;
 }
 
 .record.active .record-icon {
-  animation-name: flash;
-  animation-iteration-count: infinite;
-  animation-fill-mode: both;
-  animation-duration: 1.5s;
-  background: #f00;
+    animation-name: flash;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+    animation-duration: 1.5s;
+    background: #f00;
 }
 
 .download {
-  background: #000;
-  border-radius: 10px;
-  color: #fff;
-  border: 0;
-  padding: 0.5em 2em;
-  cursor: pointer;
+    background: #000;
+    border-radius: 10px;
+    color: #fff;
+    border: 0;
+    padding: 0.5em 2em;
+    cursor: pointer;
 }
 
 .download:disabled {
-  cursor: not-allowed;
-  background: #aaa;
+    cursor: not-allowed;
+    background: #aaa;
 }
 
 @-moz-keyframes flash {
-  from, 50%, to {
-    opacity: 1;
-  }
+    from, 50%, to {
+        opacity: 1;
+    }
 
-  25%, 75% {
-    opacity: 0;
-  }
+    25%, 75% {
+        opacity: 0;
+    }
 }
