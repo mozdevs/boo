@@ -22,11 +22,12 @@ var Renderer = function(canvas, errorCallback, readyCallback) {
     var effects = [];
     var effectDefinitions = {
         'None': { vertex: 'plane.vs', fragment: 'none.fs' },
-        'Witch': { vertex: 'plane.vs', fragment: 'greenmonster.fs' },
+		'Witch': { vertex: 'plane.vs', fragment: 'greenmonster.fs' },
         'Lo-Fi Purple': { vertex: 'plane.vs', fragment: 'lofipurple.fs' },
         'Pixelated Red': { vertex: 'plane.vs', fragment: 'redpixel.fs' },
         'Burnt': { vertex: 'plane.vs', fragment: 'burnt.fs' },
-        'Inverted': { vertex: 'plane.vs', fragment: 'inverted.fs' }
+        'Inverted': { vertex: 'plane.vs', fragment: 'inverted.fs' },
+        'HalfTone': { vertex: 'plane.vs', fragment: 'halftone.fs' }
     };
     var activeEffect = null;
     var shadersReady = false;
