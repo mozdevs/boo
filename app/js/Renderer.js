@@ -27,7 +27,8 @@ var Renderer = function(canvas, errorCallback, readyCallback) {
         'Pixelated Red': { vertex: 'plane.vs', fragment: 'redpixel.fs' },
         'Burnt': { vertex: 'plane.vs', fragment: 'burnt.fs' },
         'Inverted': { vertex: 'plane.vs', fragment: 'inverted.fs' },
-        'HalfTone': { vertex: 'plane.vs', fragment: 'halftone.fs' }
+        'HalfTone': { vertex: 'plane.vs', fragment: 'halftone.fs' },
+        'Abstract Tone': { vertex: 'plane.vs', fragment: 'halftone-abstract.fs' }
     };
     var activeEffect = null;
     var shadersReady = false;
